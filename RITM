@@ -23,3 +23,15 @@
     }
 
 })(inputs, outputs);
+
+
+function onLoad() {
+    // Get the variable by its name
+    var myVariable = g_form.getControl('variable_name');
+
+    // Check if the variable exists
+    if (myVariable) {
+        // Set the variable to read-only
+        g_form.setReadOnly('variable_name', true);
+    }
+}
