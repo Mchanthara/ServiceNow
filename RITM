@@ -1,0 +1,25 @@
+// This script assumes you have passed the RITM number as input to the flow
+
+(function execute(inputs, outputs) {
+
+    // Define the RITM number
+    var ritmNumber = inputs.ritm_number;
+
+    // Query the 'sc_req_item' table (which holds RITM records)
+    var ritm = new GlideRecord('sc_req_item');
+    ritm.addQuery('number', ritmNumber); // Look for the specific RITM number
+    ritm.query();
+
+    // Check if the RITM was found
+    if (ritm.next()) {
+        // RITM was found, you can now access its fields
+        outputs.short_description = ritm.short_description;
+        outputs.requested_for = ritm.requested_for.getDisplayValue();
+        outputs.state = ritm.state.getDisplayValue();
+        outputs.assigned_to = ritm.assigned_to.getDisplayValue();
+    } else {
+        // RITM was not found
+        outputs.error = 'RITM number not found';
+    }
+
+})(inputs, outputs);
